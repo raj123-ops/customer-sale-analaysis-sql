@@ -1,0 +1,107 @@
+1.List all orders with customer names using INNER JOIN.
+select 
+cutomers.customer_name,
+orders.order_id
+from cutomers
+inner join orders 
+on cutomers.customer_id=orders.customer_id
+
+2. Show only the orders where amount is greater than 300 with customer names.
+select
+cutomers.customer_name,
+orders.amount
+from cutomers
+inner join orders
+on cutomers.customer_id=orders.customer_id
+where amount >300
+
+
+3. Display the total order amount for each customer.
+select
+cutomers.customer_name,
+sum(orders.amount)as total_order_amount
+from cutomers
+join orders
+on cutomers.customer_id=orders.customer_id
+group by cutomers.customer_name;
+
+4. Display all customers with their total order amount, even if they havent placed any orders (useLEFT JOIN).
+
+select
+cutomers.customer_name,
+sum(orders.amount)as total_order_amount
+from cutomers
+left join orders
+on cutomers.customer_id=orders.customer_id
+group by cutomers.customer_name;
+
+
+5. Find the customer who has spent the most (top customer by total amount)
+
+select
+cutomers.customer_name,
+sum(orders.amount)as total_spent
+from cutomers
+join orders
+on cutomers.customer_id=orders.customer_id
+group by cutomers.customer_name 
+order by total_spent desc;
+
+6. List all customers who havent placed any orders
+
+select 
+cutomers.customer_name
+from cutomers
+left join orders
+on cutomers.customer_id=orders.customer_id
+where orders.order_id is null;
+
+7.Show all orders including unmatched customer records (use RIGHT JOIN or FULL JOIN).
+
+select
+cutomers.customer_name,
+orders.order_id
+from cutomers
+full join orders
+on cutomers.customer_id=orders.customer_id
+
+select
+cutomers.customer_name,
+orders.order_id
+from cutomers
+right join orders
+on cutomers.customer_id=orders.customer_id
+
+8. Count the number of orders each customer has placed.
+
+select
+cutomers.customer_name,
+count(orders.order_id) as total_orders
+from cutomers
+join orders
+on cutomers.customer_id=orders.customer_id
+group by cutomers.customer_name;
+
+
+9.Display the average order amount for each customer.
+
+select
+cutomers.customer_name,
+round (avg(orders.amount),2)as average_orders
+from cutomers
+join orders
+on cutomers.customer_id=orders.customer_id
+group by cutomers.customer_name;
+
+10.List customers and their latest order date.
+
+select
+cutomers.customer_name,
+max(orders.order_date) as Latest_order_date
+from cutomers
+join orders
+on cutomers.customer_id=orders.customer_id
+group by cutomers.customer_name;
+
+
+
